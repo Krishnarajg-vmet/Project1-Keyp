@@ -43,7 +43,7 @@ public class Credential {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="user_id")
-	private Users users;
+	private Users user;
 	
 	@Column(name="is_active")
 	private Boolean isActive=true;
@@ -123,11 +123,11 @@ public class Credential {
 	}
 
 	public Users getUsers() {
-		return users;
+		return user;
 	}
 
-	public void setUsers(Users users) {
-		this.users = users;
+	public void setUsers(Users user) {
+		this.user = user;
 	}
 
 	public Boolean getIsActive() {

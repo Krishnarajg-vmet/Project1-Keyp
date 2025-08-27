@@ -32,9 +32,9 @@ public class CredentialService {
         return dto;
     }
 
-	public List<CredentialDto> getAllCredentialByUsers(Users users){
+	public List<CredentialDto> getAllCredentialByUsers(Users user){
 		
-		return credentialRepository.findByUsersOrderByLastModifiedDesc(users).stream()
+		return credentialRepository.findByUserOrderByLastModifiedDesc(user).stream()
 				.map(this::mapToDTO)
 				.collect(Collectors.toList());
 		
