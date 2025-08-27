@@ -38,4 +38,24 @@ public class CustomErrorController implements ErrorController {
     public String getErrorPath() {
         return "/error";
     }
+    
+    @GetMapping("/sessionInvalid")
+    public String sessionInvalid(Model model) {
+        model.addAttribute("status", "Session Invalid");
+        model.addAttribute("error", "Your session is invalid.");
+        model.addAttribute("message", "Please log in again.");
+        model.addAttribute("path", "/sessionInvalid");
+        model.addAttribute("timestamp", java.time.LocalDateTime.now());
+        return "error"; // your error.html
+    }
+
+    @GetMapping("/sessionExpired")
+    public String sessionExpired(Model model) {
+        model.addAttribute("status", "Session Expired");
+        model.addAttribute("error", "Your session has expired.");
+        model.addAttribute("message", "Please log in again to continue.");
+        model.addAttribute("path", "/sessionExpired");
+        model.addAttribute("timestamp", java.time.LocalDateTime.now());
+        return "error"; // your error.html
+    }
 }
