@@ -66,6 +66,6 @@ public class CredentialController {
     @GetMapping("/delete/{id}")
     public String deleteCredential(@PathVariable Long id) {
         credentialService.deactivateCredentials(id);
-        return "redirect:/credentials";
+        return "redirect:/home";
     }
 }

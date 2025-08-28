@@ -1,5 +1,6 @@
 package com.kay.keyp.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,12 +30,13 @@ public class CredentialService {
         dto.setAccountType(entity.getAccountType());
         dto.setReminderInDays(entity.getReminderInDays());
         dto.setPassword(encryptionService.decrypt(entity.getPassword()));
+        dto.setLastModified(entity.getLastModified());
         return dto;
     }
 
 	public List<CredentialDto> getAllCredentialByUsers(Users user){
 		
-		return credentialRepository.findByUserOrderByLastModifiedDesc(user).stream()
+		return credentialRepository.findByUserAndIsActiveTrueOrderByLastModifiedDesc(user).stream()
 				.map(this::mapToDTO)
 				.collect(Collectors.toList());
 		
@@ -65,6 +67,7 @@ public class CredentialService {
 	public void deactivateCredentials(Long credentialId) {
 	    credentialRepository.findById(credentialId).ifPresent(credential -> {
 	        credential.setIsActive(false);
+	        credential.setLastModified(LocalDateTime.now());
 	        credentialRepository.save(credential);
 	    });
 	}

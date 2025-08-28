@@ -53,7 +53,7 @@
 <!-- Navbar -->
 <nav class="navbar fixed-top navbar-expand-lg">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">PassVault</a>
+        <a class="navbar-brand" href="#">KeyP</a>
         <div class="d-flex ms-auto">
             <span class="navbar-text text-white me-3">Welcome, <strong th:text="${#authentication.name}">User</strong></span>
             <form th:action="@{/logout}" method="post" class="d-inline">
@@ -99,7 +99,10 @@
                                 </div>
                             </td>
                             <td th:text="${credential.reminderInDays} ?: '-'">30</td>
-                            <td th:text="${#temporals.format(credential.lastModified, 'dd MMM yyyy HH:mm')}">--</td>
+                            <td th:if="${credential.lastModified != null}"
+							    th:text="${#temporals.format(credential.lastModified, 'dd MMM yyyy HH:mm')}">--</td>
+							<td th:unless="${credential.lastModified != null}">--</td>
+
                             <td>
                                 <a th:href="@{'/credentials/edit/' + ${credential.credentialId}}"
                                    class="btn btn-sm btn-outline-secondary btn-action">✏️ Edit</a>

@@ -12,4 +12,5 @@ import com.kay.keyp.entity.Users;
 public interface CredentialRepository extends JpaRepository<Credential, Long>{
 
 	List<Credential> findByUserOrderByLastModifiedDesc(Users user);
+	List<Credential> findByUserAndIsActiveTrueOrderByLastModifiedDesc(Users user);
 }
