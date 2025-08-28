@@ -10,7 +10,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/users")
 public class UsersController {
 
     private final UsersService usersService;
@@ -19,13 +18,7 @@ public class UsersController {
         this.usersService = usersService;
     }
 
-    @GetMapping("/register")
-    public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new UsersDto());
-        return "user-register";
-    }
-
-    @PostMapping("/register")
+    @PostMapping("/public/register")
     public String registerUser(@Valid @ModelAttribute("user") UsersDto userDto,
                                BindingResult result,
                                Model model) {
@@ -44,7 +37,7 @@ public class UsersController {
         return "redirect:/login";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/users/{id}")
     public String viewUserProfile(@PathVariable Long id, Model model) {
         return usersService.findById(id)
                 .map(user -> {
@@ -55,12 +48,7 @@ public class UsersController {
                 .orElse("redirect:/error");
     }
 
-    @GetMapping("/reset-password")
-    public String showResetPasswordForm() {
-        return "reset-password";
-    }
-
-    @PostMapping("/reset-password")
+    @PostMapping("/public/reset-password")
     public String resetPassword(@RequestParam("username") String username,
                                 @RequestParam("email") String email,
                                 @RequestParam("newPassword") String newPassword,
@@ -83,7 +71,7 @@ public class UsersController {
         return "reset-password";
     }
 
-    @PostMapping("/update")
+    @PostMapping("/users/update")
     public String updateUserProfile(@ModelAttribute("user") UsersDto userDto, Model model) {
         return usersService.findById(userDto.getId())
                 .map(existingUser -> {

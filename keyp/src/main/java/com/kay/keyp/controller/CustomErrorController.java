@@ -46,7 +46,7 @@ public class CustomErrorController implements ErrorController {
         model.addAttribute("message", "Please log in again.");
         model.addAttribute("path", "/sessionInvalid");
         model.addAttribute("timestamp", java.time.LocalDateTime.now());
-        return "error"; // your error.html
+        return "error";
     }
 
     @GetMapping("/sessionExpired")
@@ -56,6 +56,6 @@ public class CustomErrorController implements ErrorController {
         model.addAttribute("message", "Please log in again to continue.");
         model.addAttribute("path", "/sessionExpired");
         model.addAttribute("timestamp", java.time.LocalDateTime.now());
-        return "error"; // your error.html
+        return "error";
     }
 }

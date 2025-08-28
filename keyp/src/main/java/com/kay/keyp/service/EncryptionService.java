@@ -1,5 +1,7 @@
 package com.kay.keyp.service;
 
+import java.security.MessageDigest;
+import java.util.Arrays;
 import java.util.Base64;
 
 import javax.crypto.Cipher;
@@ -18,10 +20,18 @@ public class EncryptionService {
         this.secretKey = secretKey;
     }
     
+    public SecretKeySpec getSecretKeySpec(String myKey) throws Exception {
+        MessageDigest sha = MessageDigest.getInstance("SHA-256");
+        byte[] key = myKey.getBytes("UTF-8");
+        key = sha.digest(key);
+        key = Arrays.copyOf(key, 16);
+        return new SecretKeySpec(key, "AES");
+    }
+    
     public String encrypt(String strToEncrypt) {
         try {
             Cipher cipher = Cipher.getInstance("AES");
-            SecretKeySpec keySpec = new SecretKeySpec(secretKey.getBytes(), "AES");
+            SecretKeySpec keySpec = getSecretKeySpec(secretKey);
             cipher.init(Cipher.ENCRYPT_MODE, keySpec);
             return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes()));
         } catch (Exception e) {
@@ -32,7 +42,7 @@ public class EncryptionService {
     public String decrypt(String strToDecrypt) {
         try {
             Cipher cipher = Cipher.getInstance("AES");
-            SecretKeySpec keySpec = new SecretKeySpec(secretKey.getBytes(), "AES");
+            SecretKeySpec keySpec = getSecretKeySpec(secretKey);
             cipher.init(Cipher.DECRYPT_MODE, keySpec);
             return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
         } catch (Exception e) {

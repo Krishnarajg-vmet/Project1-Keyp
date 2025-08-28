@@ -1,7 +1,10 @@
 package com.kay.keyp.dto;
 
+import java.time.LocalDateTime;
+
 import com.kay.keyp.enums.AccountType;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -19,6 +22,8 @@ public class CredentialDto {
 	private String password;
 	
 	private Integer reminderInDays;
+	
+	private LocalDateTime lastModified;
 
 	public Long getCredentialId() {
 		return credentialId;
@@ -58,6 +63,14 @@ public class CredentialDto {
 
 	public void setReminderInDays(Integer reminderInDays) {
 		this.reminderInDays = reminderInDays;
+	}
+
+	public LocalDateTime getLastModified() {
+		return lastModified;
+	}
+
+	public void setLastModified(LocalDateTime lastModified) {
+		this.lastModified = lastModified;
 	}
 
 	

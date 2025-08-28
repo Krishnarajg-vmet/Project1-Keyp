@@ -26,13 +26,6 @@ public class CredentialController {
     @Autowired
     private UsersService usersService;
 
-    @GetMapping
-    public String listCredentials(Model model, @AuthenticationPrincipal UserDetails userDetails) {
-        Users currentUser = usersService.findByUsername(userDetails.getUsername()).orElseThrow();
-        model.addAttribute("credentials", credentialService.getAllCredentialByUsers(currentUser));
-        return "credential-list";
-    }
-
     @GetMapping("/add")
     public String showForm(Model model) {
         model.addAttribute("credential", new CredentialDto());
@@ -55,7 +48,7 @@ public class CredentialController {
 
         credentialService.saveCredentials(credential, currentUser);
 
-        return "redirect:/credentials";
+        return "redirect:/home";
     }
 
 
